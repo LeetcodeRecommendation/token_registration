@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.leetcoders</groupId>
 	<artifactId>token_registration</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>token_registration</name>
 	<description>token registration service</description>
 	<url/>
@@ -27,7 +27,7 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>22</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
