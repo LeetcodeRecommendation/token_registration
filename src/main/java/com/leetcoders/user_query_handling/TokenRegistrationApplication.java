@@ -1,4 +1,4 @@
-package com.leetcoders.token_registration;
+package com.leetcoders.user_query_handling;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

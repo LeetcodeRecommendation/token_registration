@@ -1,6 +1,6 @@
-package com.leetcoders.token_registration.web;
+package com.leetcoders.user_query_handling.web;
 
-import com.leetcoders.token_registration.utils.PostgresHandler;
+import com.leetcoders.user_query_handling.utils.PostgresHandler;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +21,7 @@ public class RegisterUser {
     public ResponseEntity<Void> registerUserWithToken(@RequestBody @Valid UserDetails details,
                                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            // Handle validation errors, e.g., return a response with error details
-            return ResponseEntity.badRequest().body(null); // Or handle differently based on your needs
+            return ResponseEntity.badRequest().body(null);
         }
         if (postgresHandler.updateUserDetails(details)) {
             return new ResponseEntity<>(HttpStatusCode.valueOf(200));
