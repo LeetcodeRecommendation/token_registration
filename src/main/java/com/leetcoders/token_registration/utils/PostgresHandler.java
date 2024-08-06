@@ -21,25 +21,27 @@ public class PostgresHandler {
                         access_key varchar(255),
                         companies text ARRAY,
                         solved_questions int,
-                        time_to_update timestamp
+                        time_to_update timestamp,
+                        being_processed BOOLEAN
                     );
                 END IF;
             END $$;
             """;
     private static final String UPDATE_USER_DETAILS = """
-        INSERT INTO user_details (name, access_key, companies, solved_questions, time_to_update)
+        INSERT INTO user_details (name, access_key, companies, solved_questions, time_to_update, being_processed)
         VALUES
             (
                 ?,
                 ?,
                 ?,
                 0,
-                now() AT TIME ZONE 'UTC'
+                now() AT TIME ZONE 'UTC',
+                FALSE
             )
         ON CONFLICT (name)
         DO
         UPDATE
-        SET name=?, access_key=?, companies=?, time_to_update=now() AT TIME ZONE 'UTC';
+        SET name=?, access_key=?, companies=?, time_to_update=now() AT TIME ZONE 'UTC', being_processed=FALSE;
         """;
     private static final Logger logger = LoggerFactory.getLogger(PostgresHandler.class);
     private static final String DB_NAME = "leetcode-rs";
@@ -71,8 +73,7 @@ public class PostgresHandler {
     }
 
     public boolean updateUserDetails(UserDetails userDetails) {
-        try (Connection connection = ds.getConnection()) {
-            var statement = connection.prepareStatement(UPDATE_USER_DETAILS);
+        try (Connection connection = ds.getConnection(); var statement = connection.prepareStatement(UPDATE_USER_DETAILS)) {
             statement.setString(1, userDetails.name());
             statement.setString(4, userDetails.name());
             statement.setString(2, userDetails.token());
